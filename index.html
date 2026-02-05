@@ -32,7 +32,7 @@
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
             position: sticky;
             top: 0;
-            z-index: 2000; /* Zvýšeno pro jistotu */
+            z-index: 2000;
         }
 
         nav {
@@ -42,6 +42,7 @@
             width: 100%;
         }
 
+        /* LOGO - OPRAVENÝ HOVER */
         .logo { 
             font-size: 1.5rem; 
             font-weight: 800; 
@@ -49,6 +50,13 @@
             text-decoration: none; 
             cursor: pointer;
             z-index: 2100;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo:hover {
+            color: var(--primary);
         }
 
         .logo span { color: var(--primary); }
@@ -108,7 +116,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* SEKCE HERO & KARTY */
+        /* HERO & SEKCE */
         .hero { text-align: center; padding: 100px 20px; }
         .hero h1 { font-size: clamp(2.2rem, 5vw, 4rem); color: var(--dark); margin-bottom: 20px; font-weight: 800; }
         .hero p { max-width: 600px; margin: 0 auto 30px; font-size: 1.15rem; color: #64748b; }
@@ -139,10 +147,9 @@
         .msg-link { color: var(--primary); text-decoration: none; font-weight: 700; border: 2px solid var(--primary); padding: 8px 16px; border-radius: 8px; }
         .copyright { text-align: center; padding: 20px; font-size: 0.8rem; color: rgba(255,255,255,0.3); border-top: 1px solid rgba(255,255,255,0.05); }
 
-        /* MOBILNÍ STYLY - FULLSCREEN MENU */
+        /* MOBILNÍ FULLSCREEN MENU */
         @media (max-width: 768px) {
             header { padding: 1rem 20px; }
-            
             .burger { display: flex; }
 
             .nav-links {
@@ -162,28 +169,16 @@
                 z-index: 2050;
             }
 
-            .nav-links.active {
-                opacity: 1;
-                visibility: visible;
-            }
-
-            .nav-links a {
-                font-size: 2rem; /* Velké písmo na celou stránku */
-                font-weight: 800;
-            }
-
+            .nav-links.active { opacity: 1; visibility: visible; }
+            .nav-links a { font-size: 2rem; font-weight: 800; }
             .contact-bar { flex-direction: column; text-align: center; gap: 20px; }
             .contact-items { flex-direction: column; gap: 10px; }
 
-            /* Burger animace na křížek */
             .burger.open span:nth-child(1) { transform: rotate(45deg) translate(6px, 7px); }
             .burger.open span:nth-child(2) { opacity: 0; transform: translateX(-20px); }
             .burger.open span:nth-child(3) { transform: rotate(-45deg) translate(6px, -7px); }
             
-            /* Zabránění scrollování při otevřeném menu */
-            body.menu-open {
-                overflow: hidden;
-            }
+            body.menu-open { overflow: hidden; }
         }
     </style>
 </head>
@@ -191,7 +186,7 @@
 
     <header>
         <nav>
-            <a onclick="showPage('domu')" class="logo">🚀 Raketové<span>Weby</span></a>
+            <div onclick="showPage('domu')" class="logo">🚀 Raketové<span>Weby</span></div>
             
             <div class="burger" id="burger" onclick="toggleMenu()">
                 <span></span>
@@ -270,7 +265,6 @@
         const nav = document.getElementById('nav-links');
         const body = document.getElementById('body');
 
-        // PŘEPÍNÁNÍ STRÁNEK
         function showPage(pageId) {
             const pages = document.querySelectorAll('.page');
             pages.forEach(page => page.classList.remove('active'));
@@ -282,7 +276,7 @@
             const activeLink = document.getElementById('link-' + pageId);
             if (activeLink) activeLink.classList.add('active');
 
-            // Pokud je menu otevřené, zavřeme ho
+            // Pokud je mobilní menu otevřené, zavřeme ho při kliknutí na odkaz nebo logo
             if(nav.classList.contains('active')) {
                 toggleMenu();
             }
@@ -290,11 +284,10 @@
             window.scrollTo(0, 0);
         }
 
-        // FULLSCREEN MENU LOGIKA
         function toggleMenu() {
             nav.classList.toggle('active');
             burger.classList.toggle('open');
-            body.classList.toggle('menu-open'); // Zabraní scrollu pozadí
+            body.classList.toggle('menu-open');
         }
     </script>
 
