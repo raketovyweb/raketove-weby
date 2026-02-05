@@ -14,12 +14,8 @@
             --white: #ffffff;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body {
             font-family: 'Inter', sans-serif;
             background: var(--light);
@@ -29,14 +25,14 @@
             min-height: 100vh;
         }
 
-        /* Hlavička roztažená do krajů */
+        /* HLAVIČKA */
         header {
             background: var(--white);
-            padding: 1.5rem 40px;
+            padding: 1rem 40px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
             position: sticky;
             top: 0;
-            z-index: 100;
+            z-index: 1000;
         }
 
         nav {
@@ -46,209 +42,133 @@
             width: 100%;
         }
 
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--dark);
-            text-decoration: none;
+        .logo { 
+            font-size: 1.5rem; 
+            font-weight: 800; 
+            color: var(--dark); 
+            text-decoration: none; 
             cursor: pointer;
+            z-index: 1100;
         }
 
-            .logo span {
-                color: var(--primary);
-            }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 35px; /* Trochu větší mezery pro čistotu */
+        .logo span { color: var(--primary); }
+        
+        /* DESKTOP MENU */
+        .nav-links { 
+            display: flex; 
+            list-style: none; 
+            gap: 35px; 
         }
 
-        nav a {
-            text-decoration: none;
-            color: var(--text);
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.3s;
+        .nav-links a { 
+            text-decoration: none; 
+            color: var(--text); 
+            font-weight: 600; 
+            cursor: pointer; 
+            transition: 0.3s; 
             font-size: 1.05rem;
         }
 
-            nav a:hover, nav a.active {
-                color: var(--primary);
-            }
+        .nav-links a:hover, .nav-links a.active { color: var(--primary); }
 
-        /* Hlavní obsah */
-        main {
-            flex: 1;
+        /* BURGER TLAČÍTKO */
+        .burger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            z-index: 1100;
+            padding: 5px;
         }
+
+        .burger span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background: var(--dark);
+            border-radius: 3px;
+            transition: 0.3s;
+        }
+
+        /* OBSAH */
+        main { flex: 1; }
 
         .page {
             display: none;
             max-width: 1100px;
             margin: 0 auto;
-            padding: 80px 20px;
+            padding: 60px 20px;
             animation: fadeIn 0.4s ease-out;
         }
 
-            .page.active {
-                display: block;
-            }
+        .page.active { display: block; }
 
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Sekce */
-        .hero {
-            text-align: center;
-            padding: 120px 0;
-        }
+        /* HERO & KARTY */
+        .hero { text-align: center; padding: 100px 20px; }
+        .hero h1 { font-size: clamp(2.2rem, 5vw, 4rem); color: var(--dark); margin-bottom: 20px; font-weight: 800; }
+        .hero p { max-width: 600px; margin: 0 auto 30px; font-size: 1.15rem; color: #64748b; }
 
-            .hero h1 {
-                font-size: clamp(2.5rem, 5vw, 4rem);
-                color: var(--dark);
-                margin-bottom: 20px;
-                font-weight: 800;
-            }
-
-            .hero p {
-                max-width: 600px;
-                margin: 0 auto 30px;
-                font-size: 1.15rem;
-                color: #64748b;
-            }
-
-        .btn {
-            background: var(--primary);
-            color: white;
-            padding: 14px 30px;
-            border-radius: 10px;
-            text-decoration: none;
-            display: inline-block;
-            font-weight: bold;
+        .btn { 
+            background: var(--primary); 
+            color: white; 
+            padding: 14px 30px; 
+            border-radius: 10px; 
+            text-decoration: none; 
+            display: inline-block; 
+            font-weight: bold; 
             transition: 0.3s;
+            border: none;
+            cursor: pointer;
         }
 
-            .btn:hover {
-                background: #0056b3;
-                transform: translateY(-2px);
-                box-shadow: 0 5px 15px rgba(0, 123, 255, 0.3);
-            }
+        .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 40px; }
+        .project-card { background: var(--white); border-radius: 18px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.04); text-decoration: none; color: inherit; transition: 0.3s; border: 1px solid #f1f5f9; }
+        .project-card:hover { transform: translateY(-8px); border-color: var(--primary); }
+        .project-img { height: 200px; background: var(--dark); color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; }
+        .project-info { padding: 25px; }
 
-        /* Portfolio */
-        .portfolio-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-        }
+        /* FOOTER */
+        footer { background: var(--dark); color: white; width: 100%; margin-top: 80px; }
+        .contact-bar { padding: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 1400px; margin: 0 auto; }
+        .contact-items { display: flex; gap: 30px; font-size: 1rem; }
+        .msg-link { color: var(--primary); text-decoration: none; font-weight: 700; border: 2px solid var(--primary); padding: 8px 16px; border-radius: 8px; }
+        .copyright { text-align: center; padding: 20px; font-size: 0.8rem; color: rgba(255,255,255,0.3); border-top: 1px solid rgba(255,255,255,0.05); }
 
-        .project-card {
-            background: var(--white);
-            border-radius: 18px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.04);
-            text-decoration: none;
-            color: inherit;
-            transition: 0.3s;
-            border: 1px solid #f1f5f9;
-        }
+        /* MOBILNÍ STYLY */
+        @media (max-width: 768px) {
+            header { padding: 1rem 20px; }
+            
+            .burger { display: flex; }
 
-            .project-card:hover {
-                transform: translateY(-8px);
-                border-color: var(--primary);
-            }
-
-        .project-img {
-            height: 220px;
-            background: var(--dark);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 1.3rem;
-            letter-spacing: 1px;
-        }
-
-        .project-info {
-            padding: 25px;
-        }
-
-        /* Sjednocený tmavý footer bez kontaktů nahoře */
-        footer {
-            background: var(--dark);
-            color: white;
-            width: 100%;
-            margin-top: 80px;
-        }
-
-        .contact-bar {
-            padding: 45px 40px 25px 40px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .contact-items {
-            display: flex;
-            gap: 40px;
-            font-size: 1rem;
-        }
-
-            .contact-items span {
-                display: flex;
+            .nav-links {
+                position: fixed;
+                right: -100%;
+                top: 0;
+                height: 100vh;
+                width: 70%;
+                background: var(--white);
+                flex-direction: column;
                 align-items: center;
-                gap: 10px;
-                color: rgba(255,255,255,0.9);
+                justify-content: center;
+                transition: 0.4s;
+                box-shadow: -10px 0 30px rgba(0,0,0,0.1);
+                z-index: 1050;
             }
 
-        .msg-link {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 700;
-            border: 2px solid var(--primary);
-            padding: 10px 20px;
-            border-radius: 8px;
-            transition: 0.3s;
-        }
+            .nav-links.active { right: 0; }
 
-            .msg-link:hover {
-                background: var(--primary);
-                color: white;
-            }
+            .contact-bar { flex-direction: column; text-align: center; gap: 20px; }
+            .contact-items { flex-direction: column; gap: 10px; }
 
-        .copyright {
-            text-align: center;
-            padding: 25px;
-            font-size: 0.85rem;
-            color: rgba(255,255,255,0.3);
-            border-top: 1px solid rgba(255,255,255,0.05);
-            width: 100%;
-        }
-
-        @media (max-width: 900px) {
-            .contact-bar {
-                flex-direction: column;
-                gap: 30px;
-                text-align: center;
-                padding: 40px 20px;
-            }
-
-            .contact-items {
-                flex-direction: column;
-                gap: 15px;
-            }
+            /* Animace burgeru na X */
+            .burger.open span:nth-child(1) { transform: rotate(45deg) translate(6px, 6px); }
+            .burger.open span:nth-child(2) { opacity: 0; }
+            .burger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
         }
     </style>
 </head>
@@ -257,7 +177,14 @@
     <header>
         <nav>
             <a onclick="showPage('domu')" class="logo">🚀 Raketové<span>Weby</span></a>
-            <ul>
+            
+            <div class="burger" id="burger" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+            <ul class="nav-links" id="nav-links">
                 <li><a onclick="showPage('domu')" id="link-domu" class="active">Domů</a></li>
                 <li><a onclick="showPage('prace')" id="link-prace">Naše práce</a></li>
                 <li><a onclick="showPage('sluzby')" id="link-sluzby">Služby</a></li>
@@ -269,50 +196,41 @@
         <div id="domu" class="page active">
             <section class="hero">
                 <h1>Weby, které letí vzhůru.</h1>
-                <p>Navrhujeme a vyvíjíme bleskově rychlé weby. Žádné zbytečnosti, jen čistý kód a tah na branku.</p>
+                <p>Navrhujeme bleskově rychlé weby. Žádné zbytečnosti, jen čistý kód a tah na branku.</p>
                 <button onclick="showPage('prace')" class="btn">Prohlédnout naše projekty</button>
             </section>
         </div>
 
         <div id="prace" class="page">
-            <h2 style="margin-bottom: 10px; font-size: 2.2rem; color: var(--dark);">Naše práce</h2>
-            <p style="margin-bottom: 40px;">Projekty, pod které se s hrdostí podepíšeme.</p>
+            <h2 style="margin-bottom: 30px;">Naše práce</h2>
             <div class="portfolio-grid">
                 <a href="https://trim-d.cz" target="_blank" class="project-card">
-                    <div class="project-img" style="background: #1e293b;">TRIM-D.cz</div>
+                    <div class="project-img">TRIM-D.cz</div>
                     <div class="project-info">
                         <h3>TRIM-D.cz</h3>
-                        <p>Webová prezentace pro moderní studio zaměřené na interiéry a design na klíč.</p>
+                        <p>Webová prezentace pro moderní studio zaměřené na interiéry.</p>
                     </div>
                 </a>
                 <div class="project-card">
-                    <div class="project-img" style="background: #334155;">PŘÍPRAVA</div>
+                    <div class="project-img">PŘÍPRAVA</div>
                     <div class="project-info">
                         <h3>Váš projekt</h3>
-                        <p>Zde může být váš nový web, který bude reprezentovat vaši značku na maximum.</p>
+                        <p>Tady může být vaše nová digitální vizitka.</p>
                     </div>
                 </div>
             </div>
         </div>
 
         <div id="sluzby" class="page">
-            <h2 style="margin-bottom: 10px; font-size: 2.2rem; color: var(--dark);">Služby</h2>
-            <p style="margin-bottom: 40px;">Jak vám můžeme pomoci k raketovému růstu.</p>
+            <h2 style="margin-bottom: 30px;">Služby</h2>
             <div class="portfolio-grid">
-                <div class="project-info" style="background: white; border-radius: 18px; padding: 35px; border: 1px solid #f1f5f9;">
-                    <div style="font-size: 2rem; margin-bottom: 15px;">🚀</div>
-                    <h3>Weby na míru</h3>
-                    <p>Každý řádek kódu má svůj smysl. Výsledkem je extrémně rychlá a bezpečná stránka.</p>
+                <div class="project-info" style="background: white; border-radius: 18px; padding: 30px; border: 1px solid #f1f5f9;">
+                    <h3>🚀 Weby na míru</h3>
+                    <p>Každý řádek kódu má svůj smysl. Výsledkem je extrémně rychlá stránka.</p>
                 </div>
-                <div class="project-info" style="background: white; border-radius: 18px; padding: 35px; border: 1px solid #f1f5f9;">
-                    <div style="font-size: 2rem; margin-bottom: 15px;">📱</div>
-                    <h3>Responzivita</h3>
-                    <p>Fungujeme skvěle na telefonech. Dnes je mobilní verze důležitější než ta počítačová.</p>
-                </div>
-                <div class="project-info" style="background: white; border-radius: 18px; padding: 35px; border: 1px solid #f1f5f9;">
-                    <div style="font-size: 2rem; margin-bottom: 15px;">🔍</div>
-                    <h3>SEO optimalizace</h3>
-                    <p>Pomůžeme vyhledávačům pochopit váš obsah, abyste byli v popředí výsledků.</p>
+                <div class="project-info" style="background: white; border-radius: 18px; padding: 30px; border: 1px solid #f1f5f9;">
+                    <h3>📱 Responzivita</h3>
+                    <p>Fungujeme skvěle na telefonech. Váš web bude vypadat dokonale kdekoli.</p>
                 </div>
             </div>
         </div>
@@ -327,27 +245,39 @@
                 <a href="mailto:info@raketove-weby.cz" class="msg-link">Napsat zprávu</a>
             </div>
         </div>
-
         <div class="copyright">
             &copy; 2024 Raketové-Weby.cz | Jednoduchost je naše palivo.
         </div>
     </footer>
 
     <script>
+        // PŘEPÍNÁNÍ STRÁNEK
         function showPage(pageId) {
             const pages = document.querySelectorAll('.page');
             pages.forEach(page => page.classList.remove('active'));
 
-            const links = document.querySelectorAll('nav a');
+            const links = document.querySelectorAll('.nav-links a');
             links.forEach(link => link.classList.remove('active'));
 
-            const targetPage = document.getElementById(pageId);
-            if (targetPage) targetPage.classList.add('active');
-
+            document.getElementById(pageId).classList.add('active');
             const activeLink = document.getElementById('link-' + pageId);
             if (activeLink) activeLink.classList.add('active');
 
+            // Zavřít mobilní menu po kliknutí na odkaz
+            const nav = document.getElementById('nav-links');
+            const burger = document.getElementById('burger');
+            nav.classList.remove('active');
+            burger.classList.remove('open');
+
             window.scrollTo(0, 0);
+        }
+
+        // BURGER MENU LOGIKA
+        function toggleMenu() {
+            const nav = document.getElementById('nav-links');
+            const burger = document.getElementById('burger');
+            nav.classList.toggle('active');
+            burger.classList.toggle('open');
         }
     </script>
 
