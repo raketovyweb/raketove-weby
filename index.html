@@ -1,188 +1,110 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="cs">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Raketové Weby | Rychle a Jednoduše</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
-
+    <title>Raketové Weby | Digitální rakety na míru</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        /* CSS STYLY */
         :root {
             --primary: #007bff;
             --primary-dark: #0056b3;
-            --dark: #1a1a1a;
-            --light: #f9f9f9;
-            --text: #333;
-            --transition: all 0.3s ease;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --text-main: #334155;
+            --white: #ffffff;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
 
         body {
             font-family: 'Inter', sans-serif;
-            line-height: 1.6;
-            color: var(--text);
+            line-height: 1.7;
+            color: var(--text-main);
             background-color: var(--light);
-            scroll-behavior: smooth;
         }
 
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 25px; }
+        section { padding: 100px 0; border-bottom: 1px solid #e2e8f0; }
 
         /* Navigace */
         header {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 15px 0;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 20px 0;
             position: sticky;
             top: 0;
-            z-index: 100;
-            backdrop-filter: blur(5px);
+            z-index: 1000;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
         }
 
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        nav { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.6rem; font-weight: 800; color: var(--dark); text-decoration: none; display: flex; align-items: center; gap: 10px; }
+        .logo span { color: var(--primary); }
+
+        nav ul { display: flex; list-style: none; gap: 30px; }
+        nav a { text-decoration: none; color: var(--text-main); font-weight: 600; transition: var(--transition); }
+        nav a:hover { color: var(--primary); }
+
+        /* Hero Sekce */
+        .hero { 
+            text-align: center; 
+            padding: 150px 0 100px; 
+            background: radial-gradient(circle at 50% 50%, #e0f2fe 0%, #f8fafc 100%);
         }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--primary);
-            text-decoration: none;
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-            align-items: center;
-        }
-
-            nav ul li {
-                margin-left: 25px;
-            }
-
-        nav a {
-            text-decoration: none;
-            color: var(--dark);
-            font-weight: 500;
-            transition: var(--transition);
-        }
-
-            nav a:hover {
-                color: var(--primary);
-            }
-
-        /* Hero sekce */
-        .hero {
-            padding: 120px 20px;
-            text-align: center;
-            background: radial-gradient(circle at top right, #eef6ff, transparent);
-        }
-
-            .hero h1 {
-                font-size: clamp(2.5rem, 5vw, 4rem);
-                line-height: 1.1;
-                margin-bottom: 20px;
-                color: var(--dark);
-                font-weight: 800;
-            }
-
-            .hero p {
-                font-size: 1.25rem;
-                margin-bottom: 40px;
-                color: #666;
-                max-width: 700px;
-                margin-left: auto;
-                margin-right: auto;
-            }
+        .hero h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); color: var(--dark); line-height: 1.1; margin-bottom: 25px; }
+        .hero p { font-size: 1.25rem; max-width: 700px; margin: 0 auto 40px; }
 
         /* Tlačítka */
-        .btn-primary {
-            background: var(--primary);
-            color: #fff;
-            padding: 18px 35px;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: bold;
-            font-size: 1.1rem;
-            transition: var(--transition);
+        .btn {
             display: inline-block;
-            box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
-        }
-
-            .btn-primary:hover {
-                transform: translateY(-3px);
-                box-shadow: 0 6px 20px rgba(0, 123, 255, 0.4);
-                background: var(--primary-dark);
-            }
-
-        /* Sekce Vlastnosti */
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            padding: 80px 20px;
-        }
-
-        .card {
-            background: #fff;
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
-            text-align: left;
+            padding: 16px 35px;
+            border-radius: 12px;
+            font-weight: 700;
+            text-decoration: none;
             transition: var(--transition);
-            border: 1px solid #eee;
+            cursor: pointer;
         }
+        .btn-primary { background: var(--primary); color: var(--white); box-shadow: 0 10px 20px rgba(0,123,255,0.2); }
+        .btn-primary:hover { background: var(--primary-dark); transform: translateY(-3px); box-shadow: 0 15px 25px rgba(0,123,255,0.3); }
 
-            .card:hover {
-                transform: translateY(-10px);
-                border-color: var(--primary);
-            }
+        /* Karty Vlastností */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 50px; }
+        .card { background: var(--white); padding: 40px; border-radius: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); border: 1px solid #f1f5f9; }
+        .card h3 { margin-bottom: 15px; color: var(--dark); }
 
-        .card-icon {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-            display: block;
-        }
-
-        .card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-            color: var(--dark);
-        }
-
-        .card p {
-            color: #666;
-        }
-
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 60px 0;
+        /* Portfolio (Naše práce) */
+        .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 40px; }
+        .work-item { 
+            position: relative; 
+            border-radius: 20px; 
+            overflow: hidden; 
             background: var(--dark);
-            color: rgba(255,255,255,0.7);
-            margin-top: 80px;
+            height: 300px;
+            display: flex;
+            align-items: flex-end;
+            color: white;
+            padding: 30px;
+            text-decoration: none;
+            transition: var(--transition);
         }
+        .work-item:hover { transform: scale(1.02); }
+        .work-item.trimd { background: linear-gradient(45deg, #1e293b, #334155), url('https://via.placeholder.com/600x400'); background-blend-mode: overlay; background-size: cover; }
+        .work-details h4 { font-size: 1.5rem; margin-bottom: 5px; }
+        .work-details p { font-size: 0.9rem; opacity: 0.8; }
 
-        /* Responzivita pro mobilní telefony */
+        /* Kontakt */
+        .contact-box { background: var(--dark); color: var(--white); border-radius: 30px; padding: 60px; text-align: center; }
+        .contact-box h2 { font-size: 2.5rem; margin-bottom: 20px; }
+        .contact-info { margin-top: 30px; font-size: 1.2rem; }
+
+        footer { text-align: center; padding: 40px 0; color: #94a3b8; font-size: 0.9rem; }
+
         @media (max-width: 768px) {
-            nav ul {
-                display: none; /* Pro jednoduchost skryto, v ostré verzi by tu bylo menu */
-            }
-
-            .hero h1 {
-                font-size: 2.5rem;
-            }
+            nav ul { display: none; }
+            .hero h1 { font-size: 2.5rem; }
         }
     </style>
 </head>
@@ -190,44 +112,86 @@
 
     <header>
         <nav class="container">
-            <a href="#" class="logo">🚀 Raketové Weby</a>
+            <a href="#" class="logo">🚀 Raketové<span>Weby</span></a>
             <ul>
                 <li><a href="#vlastnosti">Vlastnosti</a></li>
-                <li><a href="#sluzby">Služby</a></li>
+                <li><a href="#prace">Naše práce</a></li>
+                <li><a href="#o-nas">O nás</a></li>
                 <li><a href="#kontakt">Kontakt</a></li>
             </ul>
         </nav>
     </header>
 
     <main>
-        <section class="hero container">
-            <h1>Weby, které startují váš business</h1>
-            <p>Neprodáváme jen kód. Stavíme digitální stroje na úspěch, které jsou rychlé, bezpečné a vypadají skvěle na každém zařízení.</p>
-            <a href="#kontakt" class="btn-primary">Chci raketový start</a>
+        <section class="hero">
+            <div class="container">
+                <h1>Děláme weby, které<br>prodlouží váš dosah</h1>
+                <p>Jsme experti na rychlé, moderní a funkční weby. Vaše digitální vizitka by neměla jen existovat, měla by vydělávat.</p>
+                <a href="#kontakt" class="btn btn-primary">Pojďme na to</a>
+            </div>
         </section>
 
-        <section id="vlastnosti" class="features container">
-            <div class="card">
-                <span class="card-icon">⚡</span>
-                <h3>Blesková rychlost</h3>
-                <p>Každá milisekunda rozhoduje o tom, jestli u vás zákazník nakoupí. Naše weby nečekají.</p>
+        <section id="vlastnosti" class="container">
+            <h2 style="text-align: center; font-size: 2.5rem; color: var(--dark);">Proč zvolit raketový start?</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>⚡ Rychlost světla</h3>
+                    <p>Žádné zbytečné pluginy. Čistý kód znamená okamžité načítání na mobilech i desktopech.</p>
+                </div>
+                <div class="card">
+                    <h3>🎨 Unikátní design</h3>
+                    <p>Nepoužíváme okoukané šablony. Každý web kreslíme na míru vaší značce.</p>
+                </div>
+                <div class="card">
+                    <h3>📈 Orientace na konverze</h3>
+                    <p>Web stavíme tak, aby návštěvníka vedl přímo k nákupu nebo poptávce.</p>
+                </div>
             </div>
-            <div class="card">
-                <span class="card-icon">📱</span>
-                <h3>Mobile First</h3>
-                <p>Většina lidí přijde z mobilu. Váš web na něm bude vypadat a fungovat naprosto perfektně.</p>
+        </section>
+
+        <section id="prace" class="container">
+            <h2 style="text-align: center; font-size: 2.5rem; color: var(--dark); margin-bottom: 50px;">Naše práce</h2>
+            <div class="portfolio-grid">
+                <a href="https://trim-d.cz" target="_blank" class="work-item trimd">
+                    <div class="work-details">
+                        <h4>TRIM-D.cz</h4>
+                        <p>Precizní web pro moderní interiér & design.</p>
+                    </div>
+                </a>
+                
+                <div class="work-item" style="background: linear-gradient(45deg, #0f172a, #007bff);">
+                    <div class="work-details">
+                        <h4>Další projekt</h4>
+                        <p>Brzy zveřejníme další raketový start.</p>
+                    </div>
+                </div>
             </div>
-            <div class="card">
-                <span class="card-icon">📈</span>
-                <h3>Výkonné SEO</h3>
-                <p>Stavíme na pevných základech, díky kterým vás vyhledávače najdou snadněji než konkurenci.</p>
+        </section>
+
+        <section id="o-nas" class="container">
+            <div style="max-width: 800px; margin: 0 auto; text-align: center;">
+                <h2 style="font-size: 2.5rem; color: var(--dark); margin-bottom: 20px;">Kdo za tím stojí?</h2>
+                <p>Jsme tým nadšenců do technologií a designu. Naším cílem je zbavit internet pomalých a nepřehledných stránek. Každý projekt je pro nás mise, kterou chceme dotáhnout k dokonalosti.</p>
+            </div>
+        </section>
+
+        <section id="kontakt" class="container">
+            <div class="contact-box">
+                <h2>Připraveni k odletu?</h2>
+                <p>Napište nám a probereme váš nový web u kávy.</p>
+                <div class="contact-info">
+                    <p>📧 info@raketove-weby.cz</p>
+                    <p>📞 +420 123 456 789</p>
+                </div>
+                <br>
+                <a href="mailto:info@raketove-weby.cz" class="btn btn-primary">Poslat poptávku</a>
             </div>
         </section>
     </main>
 
     <footer>
         <div class="container">
-            <p>&copy; 2026 Raketové-Weby.cz | Vaše digitální mise začíná zde.</p>
+            <p>&copy; 2024 Raketové-Weby.cz | Všechna práva vyhrazena.</p>
         </div>
     </footer>
 
