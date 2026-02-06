@@ -14,6 +14,7 @@
             --text: #334155;
             --white: #ffffff;
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --container-width: 1300px; /* Sjednocená šířka pro celý web */
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -27,10 +28,10 @@
             min-height: 100vh;
         }
 
-        /* HLAVIČKA */
+        /* HLAVIČKA - ROZTAŽENÁ KE KRAJŮM */
         header {
             background: var(--white);
-            padding: 1rem 40px;
+            padding: 1.2rem 20px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
             position: sticky;
             top: 0;
@@ -41,7 +42,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            max-width: 1400px;
+            max-width: var(--container-width);
             margin: 0 auto;
             width: 100%;
         }
@@ -63,7 +64,7 @@
         .nav-links { 
             display: flex; 
             list-style: none; 
-            gap: 35px; 
+            gap: 40px; 
         }
 
         .nav-links a { 
@@ -77,32 +78,18 @@
 
         .nav-links a:hover, .nav-links a.active { color: var(--primary); }
 
-        /* BURGER TLAČÍTKO */
-        .burger {
-            display: none;
-            flex-direction: column;
-            gap: 6px;
-            cursor: pointer;
-            z-index: 2100;
-        }
-
-        .burger span {
-            display: block;
-            width: 28px;
-            height: 3px;
-            background: var(--dark);
-            border-radius: 3px;
-            transition: 0.4s;
-        }
+        /* BURGER */
+        .burger { display: none; flex-direction: column; gap: 6px; cursor: pointer; z-index: 2100; }
+        .burger span { display: block; width: 28px; height: 3px; background: var(--dark); border-radius: 3px; }
 
         /* OBSAH */
         main { flex: 1; }
 
         .page {
             display: none;
-            max-width: 1100px;
+            max-width: var(--container-width);
             margin: 0 auto;
-            padding: 60px 20px;
+            padding: 80px 20px;
             animation: fadeIn 0.4s ease-out;
         }
 
@@ -114,73 +101,97 @@
         }
 
         /* HERO */
-        .hero { text-align: center; padding: 100px 20px; }
-        .hero h1 { font-size: clamp(2.2rem, 5vw, 4rem); color: var(--dark); margin-bottom: 20px; font-weight: 800; }
-        .hero p { max-width: 600px; margin: 0 auto 30px; font-size: 1.15rem; color: #64748b; }
+        .hero { text-align: center; padding: 120px 20px; }
+        .hero h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); color: var(--dark); margin-bottom: 25px; font-weight: 800; }
+        .hero p { max-width: 700px; margin: 0 auto 40px; font-size: 1.25rem; color: #64748b; line-height: 1.6; }
 
         .btn { 
             background: var(--primary); 
             color: white; 
-            padding: 14px 30px; 
-            border-radius: 10px; 
+            padding: 16px 35px; 
+            border-radius: 12px; 
             text-decoration: none; 
             display: inline-block; 
             font-weight: bold; 
             transition: var(--transition);
             border: none;
             cursor: pointer;
+            font-size: 1.1rem;
         }
-        .btn:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,123,255,0.3); }
+        .btn:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,123,255,0.3); }
 
-        /* MŘÍŽKY */
+        /* PORTFOLIO & SLUŽBY GRID */
         .portfolio-grid { 
             display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
-            gap: 30px; 
-            margin-top: 40px; 
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); 
+            gap: 40px; 
+            margin-top: 50px; 
         }
 
-        /* KARTY PROJEKTŮ */
+        /* KARTY PROJEKTŮ - OPRAVENÉ ODSZENÍ TEXTU */
         .project-card { 
             background: var(--white); 
-            border-radius: 18px; 
+            border-radius: 20px; 
             overflow: hidden; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.04); 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.03); 
             text-decoration: none; 
             color: inherit; 
             transition: var(--transition); 
             border: 1px solid #f1f5f9; 
+            display: flex;
+            flex-direction: column;
         }
-        .project-card:hover { transform: translateY(-8px); border-color: var(--primary); }
-        .project-img { height: 200px; background: var(--dark); color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; }
+        .project-card:hover { transform: translateY(-10px); border-color: var(--primary); }
+        .project-img { height: 240px; background: var(--dark); color: white; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.5rem; letter-spacing: 1px; }
         
-        /* KARTY SLUŽEB - TVOJE NOVÁ ÚPRAVA */
+        .project-info { padding: 30px; } /* Zvětšené odsazení textu od krajů karty */
+        .project-info h3 { margin-bottom: 12px; font-size: 1.4rem; color: var(--dark); }
+        .project-info p { color: #64748b; line-height: 1.5; }
+
+        /* KARTY SLUŽEB */
         .service-card {
             background: var(--white);
-            border-radius: 18px;
-            padding: 30px;
+            border-radius: 20px;
+            padding: 40px;
             border: 1px solid #f1f5f9;
             transition: var(--transition);
             cursor: default;
         }
+        .service-card:hover { transform: translateY(-8px) scale(1.02); border-color: var(--primary); box-shadow: 0 20px 40px rgba(0,123,255,0.08); }
+        .service-card h3 { margin-bottom: 15px; color: var(--dark); font-size: 1.5rem; }
 
-        .service-card:hover {
-            transform: translateY(-8px) scale(1.03);
-            border-color: var(--primary);
-            box-shadow: 0 15px 35px rgba(0,123,255,0.1);
+        /* FOOTER - ROZTAŽENÝ KE KRAJŮM */
+        footer { background: var(--dark); color: white; width: 100%; margin-top: 100px; }
+        .contact-bar { 
+            padding: 60px 20px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            max-width: var(--container-width); 
+            margin: 0 auto; 
+        }
+        .contact-items { display: flex; gap: 40px; font-size: 1.1rem; align-items: center; }
+        
+        .msg-link { 
+            color: var(--primary); 
+            text-decoration: none; 
+            font-weight: 700; 
+            border: 2px solid var(--primary); 
+            padding: 12px 24px; 
+            border-radius: 10px; 
+            transition: var(--transition); 
+        }
+        .msg-link:hover { background: var(--primary); color: white; }
+        
+        .copyright { 
+            text-align: center; 
+            padding: 25px; 
+            font-size: 0.9rem; 
+            color: rgba(255,255,255,0.3); 
+            border-top: 1px solid rgba(255,255,255,0.05); 
         }
 
-        .service-card h3 { margin-bottom: 15px; color: var(--dark); }
-
-        /* FOOTER */
-        footer { background: var(--dark); color: white; width: 100%; margin-top: 80px; }
-        .contact-bar { padding: 40px; display: flex; justify-content: space-between; align-items: center; max-width: 1400px; margin: 0 auto; }
-        .contact-items { display: flex; gap: 30px; font-size: 1rem; }
-        .msg-link { color: var(--primary); text-decoration: none; font-weight: 700; border: 2px solid var(--primary); padding: 8px 16px; border-radius: 8px; transition: var(--transition); }
-        .msg-link:hover { background: var(--primary); color: white; }
-        .copyright { text-align: center; padding: 20px; font-size: 0.8rem; color: rgba(255,255,255,0.3); border-top: 1px solid rgba(255,255,255,0.05); }
-
-        /* MOBILNÍ MENU */
+        /* MOBILNÍ ÚPRAVY */
         @media (max-width: 768px) {
             header { padding: 1rem 20px; }
             .burger { display: flex; }
@@ -191,13 +202,10 @@
                 transition: 0.4s; z-index: 2050;
             }
             .nav-links.active { opacity: 1; visibility: visible; }
-            .nav-links a { font-size: 2rem; font-weight: 800; }
-            .contact-bar { flex-direction: column; text-align: center; gap: 20px; }
-            .contact-items { flex-direction: column; gap: 10px; }
-            .burger.open span:nth-child(1) { transform: rotate(45deg) translate(6px, 7px); }
-            .burger.open span:nth-child(2) { opacity: 0; }
-            .burger.open span:nth-child(3) { transform: rotate(-45deg) translate(6px, -7px); }
-            body.menu-open { overflow: hidden; }
+            .nav-links a { font-size: 2rem; }
+            .contact-bar { flex-direction: column; text-align: center; gap: 30px; }
+            .contact-items { flex-direction: column; gap: 20px; }
+            .portfolio-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -208,9 +216,7 @@
             <div onclick="showPage('domu')" class="logo">🚀 Raketové<span>Weby</span></div>
             
             <div class="burger" id="burger" onclick="toggleMenu()">
-                <span></span>
-                <span></span>
-                <span></span>
+                <span></span><span></span><span></span>
             </div>
 
             <ul class="nav-links" id="nav-links">
@@ -225,49 +231,53 @@
         <div id="domu" class="page active">
             <section class="hero">
                 <h1>Weby, které letí vzhůru.</h1>
-                <p>Navrhujeme bleskově rychlé weby. Žádné zbytečnosti, jen čistý kód a tah na branku.</p>
+                <p>Navrhujeme bleskově rychlé weby s čistým kódem a moderním designem. Pomůžeme vaší značce vyniknout v digitálním vesmíru.</p>
                 <button onclick="showPage('prace')" class="btn">Prohlédnout naše projekty</button>
             </section>
         </div>
 
         <div id="prace" class="page">
-            <h2 style="margin-bottom: 30px;">Naše práce</h2>
+            <h2 style="font-size: 2.5rem; color: var(--dark);">Naše práce</h2>
+            <p style="color: #64748b; margin-top: 10px;">Ukázky projektů, které jsme vypustili na oběžnou dráhu.</p>
+            
             <div class="portfolio-grid">
                 <a href="https://trim-d.cz" target="_blank" class="project-card">
                     <div class="project-img">TRIM-D.cz</div>
                     <div class="project-info">
                         <h3>TRIM-D.cz</h3>
-                        <p>Webová prezentace pro moderní studio zaměřené na interiéry.</p>
+                        <p>Webová prezentace pro moderní studio zaměřené na interiéry a design.</p>
                     </div>
                 </a>
                 <div class="project-card">
                     <div class="project-img">PŘÍPRAVA</div>
                     <div class="project-info">
-                        <h3>Váš projekt</h3>
-                        <p>Tady může být vaše nová digitální vizitka.</p>
+                        <h3>Váš budoucí projekt</h3>
+                        <p>Tady může být vaše nová digitální vizitka, která přivede nové zákazníky.</p>
                     </div>
                 </div>
             </div>
         </div>
 
         <div id="sluzby" class="page">
-            <h2 style="margin-bottom: 30px;">Služby</h2>
+            <h2 style="font-size: 2.5rem; color: var(--dark); margin-bottom: 10px;">Služby</h2>
+            <p style="color: #64748b;">Co všechno pro vás můžeme v naší raketové dílně připravit.</p>
+            
             <div class="portfolio-grid">
                 <div class="service-card">
                     <h3>🚀 Weby na míru</h3>
-                    <p>Každý řádek kódu má svůj smysl. Výsledkem je extrémně rychlá stránka.</p>
+                    <p>Žádné šablony. Každý řádek kódu píšeme s ohledem na výkon a unikátní potřeby vašeho podnikání.</p>
                 </div>
                 <div class="service-card">
                     <h3>📱 Responzivita</h3>
-                    <p>Fungujeme skvěle na telefonech. Váš web bude vypadat dokonale kdekoli.</p>
+                    <p>Váš web bude vypadat úžasně na iPhonech, Androidu i obřích monitorech. Bez kompromisů.</p>
                 </div>
                 <div class="service-card">
                     <h3>⏳ Rychlost</h3>
-                    <p>Web bude vytvořen a následně publikován raketovou rychlostí.</p>
+                    <p>Optimalizujeme každý obrázek a skript. Naše weby se načítají dřív, než stačíte mrknout.</p>
                 </div>
                 <div class="service-card">
-                    <h3>🔒 Zabezpečení</h3>
-                    <p>Váš web bude spolehlivý a zabezpečený přes HTTPS. Využíváme moderní technologie.</p>
+                    <h3>🔒 Bezpečnost</h3>
+                    <p>Nasazení na HTTPS, zabezpečení proti útokům a spolehlivý hosting jsou u nás samozřejmostí.</p>
                 </div>
             </div>
         </div>
@@ -275,7 +285,7 @@
 
     <footer>
         <div class="contact-bar">
-            <div style="font-weight: 800; font-size: 1.25rem;">Chcete taky raketový web?</div>
+            <div style="font-weight: 800; font-size: 1.5rem;">Chcete taky raketový web?</div>
             <div class="contact-items">
                 <span>📞 +420 777 123 456</span>
                 <span>✉️ info@raketove-weby.cz</span>
@@ -307,7 +317,7 @@
                 toggleMenu();
             }
 
-            window.scrollTo(0, 0);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function toggleMenu() {
