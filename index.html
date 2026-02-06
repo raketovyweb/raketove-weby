@@ -26,7 +26,6 @@
             display: flex;
             flex-direction: column;
             min-height: 100vh;
-            /* Zabrání přetečení na hlavní ose, pokud není obsah delší */
             overflow-x: hidden; 
         }
 
@@ -45,9 +44,10 @@
             justify-content: space-between;
             align-items: center;
             width: 100%;
+            max-width: var(--content-width);
+            margin: 0 auto;
         }
 
-        /* LOGO - Přidán efekt po najetí */
         .logo { 
             font-size: 1.5rem; 
             font-weight: 800; 
@@ -57,10 +57,9 @@
             display: flex;
             align-items: center;
             transition: var(--transition);
+            z-index: 3001; /* Aby bylo vždy nad menu */
         }
         .logo span { color: var(--primary); transition: var(--transition); }
-        
-        /* Po najetí na logo zmodrá i text "Raketové" */
         .logo:hover { color: var(--primary); }
         
         .nav-links { 
@@ -78,6 +77,57 @@
         }
         .nav-links a:hover, .nav-links a.active { color: var(--primary); }
 
+        /* BURGER MENU STYLY */
+        .burger {
+            display: none;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 28px;
+            height: 20px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            z-index: 3001;
+            padding: 0;
+        }
+
+        .burger span {
+            width: 100%;
+            height: 3px;
+            background: var(--dark);
+            border-radius: 10px;
+            transition: var(--transition);
+        }
+
+        /* MOBILNÍ NAVIGACE (Overlay) */
+        @media (max-width: 768px) {
+            .burger { display: flex; }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                background: var(--white);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 30px;
+                transform: translateX(100%);
+                transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+
+            .nav-links.open { transform: translateX(0); }
+
+            .nav-links a { font-size: 1.5rem; }
+
+            /* Animace burgeru na X */
+            .burger.open span:nth-child(1) { transform: translateY(8.5px) rotate(45deg); }
+            .burger.open span:nth-child(2) { opacity: 0; }
+            .burger.open span:nth-child(3) { transform: translateY(-8.5px) rotate(-45deg); }
+        }
+
         /* OBSAH */
         main { flex: 1; display: flex; flex-direction: column; }
 
@@ -92,13 +142,12 @@
 
         .page.active { display: block; }
 
-        /* Úprava pro Home Page, aby neměla scrollbar */
         #domu.active {
             display: flex;
             align-items: center;
             justify-content: center;
             flex: 1;
-            padding: 0; /* Odstranění paddingu pro přesný fit */
+            padding: 0;
         }
 
         @keyframes fadeIn {
@@ -106,8 +155,8 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* HERO (Úvodní strana) */
-        .hero { text-align: center; width: 100%; }
+        /* HERO */
+        .hero { text-align: center; width: 100%; padding: 20px; }
         .hero h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); color: var(--dark); margin-bottom: 25px; font-weight: 800; }
         .hero p { max-width: 600px; margin: 0 auto 40px; font-size: 1.2rem; color: #64748b; }
 
@@ -138,7 +187,6 @@
             margin-top: 40px;
         }
 
-        /* KARTY */
         .project-card, .service-card { 
             background: var(--white); 
             border-radius: 18px; 
@@ -203,11 +251,18 @@
 
     <header>
         <nav>
-            <div onclick="showPage('domu')" class="logo">🚀 Raketové<span>Weby</span></div>
-            <ul class="nav-links">
-                <li><a onclick="showPage('domu')" id="link-domu" class="active">Domů</a></li>
-                <li><a onclick="showPage('prace')" id="link-prace">Naše práce</a></li>
-                <li><a onclick="showPage('sluzby')" id="link-sluzby">Služby</a></li>
+            <div onclick="navigateTo('domu')" class="logo">🚀 Raketové<span>Weby</span></div>
+            
+            <button class="burger" id="burger" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <ul class="nav-links" id="navLinks">
+                <li><a onclick="navigateTo('domu')" id="link-domu" class="active">Domů</a></li>
+                <li><a onclick="navigateTo('prace')" id="link-prace">Naše práce</a></li>
+                <li><a onclick="navigateTo('sluzby')" id="link-sluzby">Služby</a></li>
             </ul>
         </nav>
     </header>
@@ -217,7 +272,7 @@
             <section class="hero">
                 <h1>Weby, které letí vzhůru.</h1>
                 <p>Navrhujeme bleskově rychlé weby s čistým kódem a moderním designem.</p>
-                <button onclick="showPage('prace')" class="btn">Prohlédnout naše projekty</button>
+                <button onclick="navigateTo('prace')" class="btn">Prohlédnout naše projekty</button>
             </section>
         </div>
 
@@ -262,16 +317,16 @@
                         <p>Web vypustíme do světa v rekordním čase.</p>
                     </div>
                 </div>
-				<div class="service-card">
+                <div class="service-card">
                     <div class="card-info">
-                    <h3>🔒 Bezpečnost</h3>
-                    <p>Nasazení na HTTPS, zabezpečení proti útokům a spolehlivý hosting jsou u nás samozřejmostí.</p>
+                        <h3>🔒 Bezpečnost</h3>
+                        <p>Nasazení na HTTPS a spolehlivý hosting jsou u nás samozřejmostí.</p>
                     </div>
                 </div>
-				<div class="service-card">
+                <div class="service-card">
                     <div class="card-info">
-                    <h3>🖥️ Hosting</h3>
-                    <p>Využíváme služby Vedos.cz, ale není problém využít jinou.</p>
+                        <h3>🖥️ Hosting</h3>
+                        <p>Využíváme moderní servery pro maximální dostupnost.</p>
                     </div>
                 </div>
             </div>
@@ -288,17 +343,35 @@
             </div>
         </div>
         <div class="copyright">
-            &copy; 2024 Raketové-Weby.cz | Jednoduchost je naše palivo.
+            &copy; 2026 Raketové-Weby.cz | Jednoduchost je naše palivo.
         </div>
     </footer>
 
     <script>
+        const burger = document.getElementById('burger');
+        const navLinks = document.getElementById('navLinks');
+
+        function toggleMenu() {
+            burger.classList.toggle('open');
+            navLinks.classList.toggle('open');
+            // Zamezení skrolingu při otevřeném menu
+            document.body.style.overflow = navLinks.classList.contains('open') ? 'hidden' : 'auto';
+        }
+
+        function navigateTo(pageId) {
+            // Pokud je menu otevřené, zavřeme ho
+            if (navLinks.classList.contains('open')) {
+                toggleMenu();
+            }
+            showPage(pageId);
+        }
+
         function showPage(pageId) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.querySelectorAll('.nav-links a').forEach(l => l.classList.remove('active'));
             
             const targetPage = document.getElementById(pageId);
-            targetPage.classList.add('active');
+            if(targetPage) targetPage.classList.add('active');
             
             const link = document.getElementById('link-' + pageId);
             if (link) link.classList.add('active');
