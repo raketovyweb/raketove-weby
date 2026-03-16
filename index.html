@@ -1,397 +1,127 @@
 <!DOCTYPE html>
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="manifest.json">
 <html lang="cs">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Raketové Weby | Digitální rakety na míru</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/png" href="./logo.png?v=3">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no, viewport-fit=cover">
+    <title>MEGAFITKO</title>
+    
+    <link rel="manifest" href="manifest.json">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@900&family=Inter:wght@400;700&display=swap');
+        
         :root {
-            --primary: #007bff;
-            --dark: #0f172a;
-            --light: #f8fafc;
-            --text: #334155;
-            --white: #ffffff;
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            --header-width: 1400px; /* Širší rozvržení pro hlavičku */
-            --content-width: 1100px;
+            /* Zamezení horizontálnímu skrolování na úrovni kořene */
+            overflow: hidden;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        body {
-            font-family: 'Inter', sans-serif;
-            background: var(--light);
-            color: var(--text);
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            overflow-x: hidden; 
-        }
-
-        /* HLAVIČKA - Roztažená ke krajům */
-        header {
-            background: var(--white);
-            padding: 1rem 40px; /* Větší padding na krajích */
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            position: sticky;
-            top: 0;
-            z-index: 2000;
-        }
-
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-            max-width: var(--header-width); /* Větší šířka na PC */
-            margin: 0 auto;
-        }
-
-        .logo { 
-            font-size: 1.5rem; 
-            font-weight: 800; 
-            color: var(--dark); 
-            text-decoration: none; 
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            transition: var(--transition);
-            z-index: 3001;
-        }
-        .logo span { color: var(--primary); transition: var(--transition); }
-        .logo:hover { color: var(--primary); }
-        
-        .nav-links { 
-            display: flex; 
-            list-style: none; 
-            gap: 40px; /* Trochu větší mezery mezi položkami */
-        }
-
-        .nav-links a { 
-            text-decoration: none; 
-            color: var(--text); 
-            font-weight: 600; 
-            cursor: pointer; 
-            transition: var(--transition);
-            position: relative;
-        }
-        .nav-links a:hover, .nav-links a.active { color: var(--primary); }
-
-        /* BURGER TLAČÍTKO */
-        .burger {
-            display: none;
-            flex-direction: column;
-            justify-content: space-around;
-            width: 28px;
-            height: 20px;
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            z-index: 3001;
-        }
-
-        .burger span {
-            width: 100%;
-            height: 3px;
-            background: var(--dark);
-            border-radius: 10px;
-            transition: var(--transition);
-            transform-origin: center;
-        }
-
-        /* MOBILNÍ NAVIGACE - Efekt "zevnitř" (fade + scale) */
-        @media (max-width: 768px) {
-            header { padding: 1rem 20px; }
-            .burger { display: flex; }
-
-            .nav-links {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100vh;
-                background: rgba(255, 255, 255, 0.98);
-                backdrop-filter: blur(10px);
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                gap: 30px;
-                
-                /* Skrytý stav - zmenšený a průhledný */
-                opacity: 0;
-                visibility: hidden;
-                transform: scale(0.8);
-                transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), visibility 0.3s;
-                z-index: 2500;
-            }
-
-            .nav-links.open {
-                opacity: 1;
-                visibility: visible;
-                transform: scale(1); /* Zvětší se "zevnitř" do normálu */
-            }
-
-            .nav-links a { font-size: 1.8rem; font-weight: 800; }
-
-            /* Animace burgeru na X */
-            .burger.open span:nth-child(1) { transform: translateY(8.5px) rotate(45deg); }
-            .burger.open span:nth-child(2) { opacity: 0; transform: scale(0); }
-            .burger.open span:nth-child(3) { transform: translateY(-8.5px) rotate(-45deg); }
-        }
-
-        /* OBSAH */
-        main { flex: 1; display: flex; flex-direction: column; }
-
-        .page {
-            display: none;
-            max-width: var(--content-width);
-            margin: 0 auto;
-            padding: 60px 20px;
-            animation: fadeIn 0.4s ease-out;
-            width: 100%;
-        }
-
-        .page.active { display: block; }
-
-        #domu.active {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex: 1;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* HERO */
-        .hero { text-align: center; width: 100%; }
-        .hero h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); color: var(--dark); margin-bottom: 25px; font-weight: 800; line-height: 1.1; }
-        .hero p { max-width: 600px; margin: 0 auto 40px; font-size: 1.2rem; color: #64748b; }
-
-        .btn { 
-            background: var(--primary); 
+        body { 
+            background: #050505; 
             color: white; 
-            padding: 16px 40px; 
-            border-radius: 12px; 
-            font-weight: 800; 
-            transition: var(--transition);
-            border: none;
-            cursor: pointer;
-            font-size: 1rem;
-        }
-        .btn:hover { transform: translateY(-3px); box-shadow: 0 12px 24px rgba(0,123,255,0.25); }
-
-        /* MŘÍŽKY */
-        .portfolio-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
-            gap: 30px; 
-            margin-top: 40px;
+            font-family: 'Inter', sans-serif;
+            /* Uzamčení proti posunu a zoomu */
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            touch-action: none; /* Úplně zakáže gesta zoomování prsty */
+            display: flex;
+            flex-direction: column;
         }
 
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 25px;
-            margin-top: 40px;
+        .gym-font { font-family: 'Orbitron', sans-serif; }
+
+        .glass { 
+            background: rgba(20, 20, 20, 0.9); 
+            backdrop-filter: blur(15px); 
+            border: 1px solid rgba(255, 255, 255, 0.1); 
         }
 
-        .project-card, .service-card { 
-            background: var(--white); 
-            border-radius: 20px; 
-            overflow: hidden; 
-            box-shadow: 0 5px 15px rgba(0,0,0,0.03); 
-            border: 1px solid #f1f5f9; 
-            transition: var(--transition);
-        }
-        
-        .project-card:hover, .service-card:hover { 
-            transform: translateY(-8px); 
-            border-color: var(--primary); 
+        /* Úprava velikosti pro "odzoomovaný" pocit - vše je kompaktnější */
+        .container-box {
+            transform: scale(0.9); /* Celou kartu mírně zmenšíme, aby vypadala elegantněji */
         }
 
-        .project-img { height: 220px; background: var(--dark); color: white; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.2rem; }
-        .card-info { padding: 30px; }
-        .card-info h3 { margin-bottom: 12px; color: var(--dark); font-size: 1.3rem; }
-
-        /* FOOTER */
-        footer { background: var(--dark); color: white; margin-top: auto; }
-        .contact-bar { 
-            padding: 60px 5%; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            max-width: var(--header-width); 
-            margin: 0 auto; 
-        }
-        .contact-items { display: flex; gap: 40px; align-items: center; }
-        
-        .msg-link { 
-            color: var(--primary); 
-            text-decoration: none; 
-            font-weight: 700; 
-            border: 2px solid var(--primary); 
-            padding: 12px 24px; 
-            border-radius: 10px; 
-            transition: var(--transition);
-        }
-        .msg-link:hover { background: var(--primary); color: white; }
-        
-        .copyright { 
-            text-align: center; 
-            padding: 25px; 
-            font-size: 0.85rem; 
-            color: rgba(255,255,255,0.3); 
-            border-top: 1px solid rgba(255,255,255,0.05); 
-        }
-
-        @media (max-width: 900px) {
-            .services-grid { grid-template-columns: repeat(2, 1fr); }
-            .contact-bar { flex-direction: column; gap: 30px; text-align: center; }
-            .contact-items { flex-direction: column; gap: 20px; }
-        }
-        @media (max-width: 600px) {
-            .services-grid { grid-template-columns: 1fr; }
+        input {
+            appearance: none;
+            font-size: 16px !important; /* Prevence auto-zoomu Safari */
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <nav>
-            <div onclick="navigateTo('domu')" class="logo">🚀 Raketové<span>Weby</span></div>
-            
-            <button class="burger" id="burger" onclick="toggleMenu()" aria-label="Menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-
-            <ul class="nav-links" id="navLinks">
-                <li><a onclick="navigateTo('domu')" id="link-domu" class="active">Domů</a></li>
-                <li><a onclick="navigateTo('prace')" id="link-prace">Naše práce</a></li>
-                <li><a onclick="navigateTo('sluzby')" id="link-sluzby">Služby</a></li>
-            </ul>
-        </nav>
+    <header class="p-4 text-center">
+        <span class="gym-font font-black tracking-widest text-lg uppercase italic text-red-500">Mega<span class="text-white">Fitko</span></span>
     </header>
 
-    <main>
-        <div id="domu" class="page active">
-            <section class="hero">
-                <h1>Weby, které letí vzhůru.</h1>
-                <p>Navrhujeme bleskově rychlé weby s čistým kódem a moderním designem.</p>
-                <button onclick="navigateTo('prace')" class="btn">Prohlédnout naše projekty</button>
-            </section>
+    <main class="flex-grow flex items-center justify-center px-4">
+        
+        <div id="login-screen" class="glass p-6 rounded-2xl w-full max-w-[300px] container-box">
+            <h1 class="gym-font text-lg font-black mb-1 text-center uppercase tracking-tighter">Člen</h1>
+            <p class="text-slate-500 text-center mb-6 text-[10px] uppercase tracking-widest text-red-500 font-bold italic">Systém aktivní</p>
+            
+            <input type="password" id="password" pattern="\d*" inputmode="numeric" placeholder="PIN" 
+                class="w-full p-3 rounded-xl bg-white/5 border border-white/10 mb-4 outline-none focus:border-red-500 text-center font-bold tracking-[1em] text-sm">
+            
+            <button onclick="login()" class="w-full bg-red-600 py-3 rounded-xl font-bold uppercase text-xs tracking-widest shadow-lg shadow-red-900/20 active:scale-95 transition-all">
+                Autorizovat
+            </button>
+            <p id="login-error" class="text-red-500 mt-3 text-center text-[9px] font-bold hidden uppercase">Chyba přístupu</p>
         </div>
 
-        <div id="prace" class="page">
-            <h2 style="font-size: 2.5rem; margin-bottom: 10px;">Naše práce</h2>
-            <p style="margin-bottom: 40px; color: #64748b;">Ukázky projektů, které jsme vypustili do digitálního světa.</p>
-            <div class="portfolio-grid">
-                <a href="https://trim-d.cz" target="_blank" class="project-card" style="text-decoration: none; color: inherit;">
-                    <div class="project-img">TRIM-D.cz</div>
-                    <div class="card-info">
-                        <h3>TRIM-D.cz</h3>
-                        <p>Webová prezentace pro moderní studio zaměřené na interiéry.</p>
-                    </div>
-                </a>
-                <div class="project-card">
-                    <div class="project-img">PŘÍPRAVA</div>
-                    <div class="card-info">
-                        <h3>Váš projekt</h3>
-                        <p>Tady může být vaše nová digitální vizitka.</p>
-                    </div>
+        <div id="app-screen" class="glass p-6 rounded-2xl w-full max-w-[300px] text-center container-box hidden">
+            <h2 class="gym-font text-base font-black uppercase text-red-500 mb-4 italic">Vstup povolen</h2>
+            
+            <div id="qr-container" class="hidden mb-6">
+                <div class="p-3 bg-white rounded-xl inline-block">
+                    <div id="qrcode"></div>
                 </div>
             </div>
-        </div>
 
-        <div id="sluzby" class="page">
-            <h2 style="font-size: 2.5rem; margin-bottom: 40px;">Služby</h2>
-            <div class="services-grid">
-                <div class="service-card">
-                    <div class="card-info">
-                        <h3>🚀 Weby na míru</h3>
-                        <p>Čistý kód optimalizovaný pro bleskové načítání a skvělé SEO.</p>
-                    </div>
-                </div>
-                <div class="service-card">
-                    <div class="card-info">
-                        <h3>📱 Responzivita</h3>
-                        <p>Váš web bude vypadat skvěle na iPhonech, Androidu i obřích monitorech.</p>
-                    </div>
-                </div>
-                <div class="service-card">
-                    <div class="card-info">
-                        <h3>⏳ Rychlost</h3>
-                        <p>Nikdo nemá rád čekání. Naše weby startují v rekordním čase.</p>
-                    </div>
-                </div>
-                <div class="service-card">
-                    <div class="card-info">
-                        <h3>🔒 Bezpečnost</h3>
-                        <p>SSL certifikáty a ochrana proti útokům jsou u nás standardem.</p>
-                    </div>
-                </div>
-                <div class="service-card">
-                    <div class="card-info">
-                        <h3>🖥️ Hosting</h3>
-                        <p>Zajistíme spolehlivý domov pro váš web s 99.9% dostupností.</p>
-                    </div>
-                </div>
-            </div>
+            <button id="buy-btn" onclick="generateTicket()" class="w-full bg-white text-black py-3 rounded-xl font-black uppercase text-xs tracking-wider active:scale-95 transition-all">
+                Generovat QR
+            </button>
+            
+            <button onclick="logout()" class="mt-8 text-slate-600 text-[9px] font-bold uppercase tracking-widest">Odhlásit</button>
         </div>
     </main>
 
-    <footer>
-        <div class="contact-bar">
-            <div style="font-weight: 800; font-size: 1.6rem;">Chcete taky raketový web?</div>
-            <div class="contact-items">
-                <p>Instagram: <a href="https://www.instagram.com/raketove.weby/" style="color: inherit; text-decoration: none;">raketove.weby</a></p>
-                <span>✉️ raketoveweby@gmail.com</span>
-                <a href="mailto:info@raketove-weby.cz" class="msg-link">Napsat zprávu</a>
-            </div>
-        </div>
-        <div class="copyright">
-            &copy; 2026 Raketové-Weby.cz | Jednoduchost je naše palivo.
-        </div>
+    <footer class="p-4 text-center text-[8px] text-slate-700 font-bold uppercase tracking-[0.4em] gym-font">
+        Terminal Locked
     </footer>
 
     <script>
-        const burger = document.getElementById('burger');
-        const navLinks = document.getElementById('navLinks');
-
-        function toggleMenu() {
-            burger.classList.toggle('open');
-            navLinks.classList.toggle('open');
-            // Zamezení skrolingu při otevřeném menu
-            document.body.style.overflow = navLinks.classList.contains('open') ? 'hidden' : 'auto';
-        }
-
-        function navigateTo(pageId) {
-            if (navLinks.classList.contains('open')) {
-                toggleMenu();
+        function login() {
+            const pass = document.getElementById('password').value;
+            if(pass === "1234") {
+                document.getElementById('login-screen').classList.add('hidden');
+                document.getElementById('app-screen').classList.remove('hidden');
+            } else {
+                document.getElementById('login-error').classList.remove('hidden');
             }
-            showPage(pageId);
         }
 
-        function showPage(pageId) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.querySelectorAll('.nav-links a').forEach(l => l.classList.remove('active'));
-            
-            const targetPage = document.getElementById(pageId);
-            if(targetPage) targetPage.classList.add('active');
-            
-            const link = document.getElementById('link-' + pageId);
-            if (link) link.classList.add('active');
-            
-            window.scrollTo(0,0);
+        function logout() { location.reload(); }
+
+        function generateTicket() {
+            const qrDiv = document.getElementById('qrcode');
+            qrDiv.innerHTML = "";
+            document.getElementById('qr-container').classList.remove('hidden');
+            new QRCode(qrDiv, {
+                text: "MF-" + Date.now(),
+                width: 140,
+                height: 140
+            });
+            const btn = document.getElementById('buy-btn');
+            btn.innerText = "AKTIVNÍ";
+            btn.disabled = true;
+            btn.style.opacity = "0.5";
         }
     </script>
 </body>
 </html>
-
-
